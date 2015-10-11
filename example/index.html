@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Modal</title>
+  <link rel="stylesheet" href="../styles/modal.css">
+  <script src="../vendor/jquery-2.1.4.js"></script>
+  <script src="../js/modal.js"></script>
+  <style>
+    .example {
+      padding: 24px 32px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <button class="fade">fade</button>
+  <button class="slide">slide</button>
+  <button class="zoom">zoom</button>
+
+  <script>
+  var fade = Modal('<div class="example">fade-in/out</div>', {
+      animation: "fade",
+      width: "auto",
+      height: "auto"
+    });
+
+    var slide = Modal('<div class="example">slide-down/up</div>', {
+      animation: "slide",
+      width: "auto",
+      height: "auto"
+    });
+
+    var zoom = Modal('<div class="example">zoom-in/out</div>', {
+      animation: "zoom",
+      width: "auto",
+      height: "auto"
+    });
+
+    $(function () {
+      $(".fade").click(function () {
+        fade.open();
+      });
+
+      $(".slide").click(function () {
+        slide.open();
+      });
+
+      $(".zoom").click(function () {
+        zoom.open();
+      });
+    });
+  </script>
+</body>
+</html>

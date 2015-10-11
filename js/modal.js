@@ -1,113 +1,79 @@
+(function ($, window) {
+  "use strict";
 
-function Modal(options) {
-  var pop = this;
+  var Modal = function (template, options) {
+    // predefine Modal defaults
+    var defaults = {
+      position: "fixed",
+      width: "50%",
+      height: "50%",
+      animation: "fade"
+    };
 
-  options = $.extend({
-    "closeOnBackdrop": true,
-    "closable": true,
-    "width": 0,
-    "height": 0,
-    "left": false,
-    "top": false,
-    "content": "",
-    "closeOn": null
-  }, options);
+    // apply custom options
+    options = $.extend(defaults, options);
 
-  var backdrop, popup, close, icon;
+    // create Backdrop Element
+    var $backdrop = $('<div></div>').addClass("modal-backdrop")
+    .appendTo("body");
 
-  var closePop = function() {
-    backdrop.fadeOut(400, function() {
-      $(this).remove();
+    // create Wrapper Element
+    var $wrapper = $('<div></div>').addClass("modal-wrapper")
+    .css({
+      "position": options.position
+    })
+    .appendTo("body")
+    // close only on click outside of modal
+    .on("click", function (event) {
+      if ($(this).has(event.target).length === 0) {
+        modalClose();
+      }
     });
-    popup.fadeOut(400, function() {
-      $(this).remove();
-    });
+
+    // create Container Element
+    var $modal = $('<div></div>').addClass("modal")
+    .css({
+      "width": options.width,
+      "height": options.height
+    })
+    .addClass("modal-" + options.animation)
+    .appendTo($wrapper);
+
+    var $content;
+    // check if template is already an jQuery Object
+    if (template instanceof $) {
+      $content = template;
+    } else {
+      $content = $(template);
+    }
+    $content.appendTo($modal);
+
+    // Modal open Method
+    function modalOpen() {
+      $modal.on("transitionend", function () {
+      });
+
+      $backdrop.addClass("show");
+      $wrapper.addClass("show");
+      $modal.addClass("show");
+    }
+
+    // Modal close Method
+    function modalClose() {
+      $modal.on("transitionend", function () {
+      });
+
+      $backdrop.removeClass("show");
+      $wrapper.removeClass("show");
+      $modal.removeClass("show");
+    }
+
+    return {
+      $content: $content,
+      close: modalClose,
+      open: modalOpen
+    };
   };
 
-  // public close method
-  pop.close = closePop;
-
-  var construct = (function() {
-    // create backdrop
-    backdrop = $(document.createElement("div")).appendTo("body");
-    backdrop.attr("id", "backdrop");
-
-    // create popup container
-    popup = $(document.createElement("div")).appendTo("body");
-    popup.attr("id", "modal");
-
-    if (options.closable) {
-      // create close button
-      close = $(document.createElement("div")).appendTo(popup);
-      close.attr("id", "modal-close");
-      icon = $(document.createElement("i")).appendTo(close);
-      icon.addClass("fa fa-times");
-    }
-
-    // create content container
-    container = $(document.createElement("div")).appendTo(popup);
-    container.attr("id", "popup-container");
-
-    // append content to popup
-    container.html(options.content);
-
-    // if no size is set get size of content
-    if (options.width <= 0) {
-      options.width = popup.width();
-    } else {
-      container.css({
-        "width": options.width+"px"
-      });
-    }
-    if (options.height <= 0) {
-      options.height = popup.height();
-    } else {
-      container.css({
-        "height": options.height+"px"
-      });
-    }
-
-    // if no position is set center popup
-    if (options.left === false) {
-      popup.css({
-        "left": "50%",
-        "margin-left": -(options.width / 2)+"px"
-      });
-    } else {
-      popup.css({
-        "left": options.left+"px"
-      });
-    }
-    if (options.top === false) {
-      popup.css({
-        "top": "50%",
-        "margin-top": -(options.height / 2)+"px"
-      });
-    } else {
-      popup.css({
-        "top": options.left+"px"
-      });
-    }
-
-    if (options.closable) {
-      // close popup on click
-      close.on("click", closePop);
-    }
-
-    if (options.closeOn) {
-      $(options.closeOn).on("click", closePop);
-    }
-
-    // close on click backdrop
-    if (options.closeOnBackdrop === true) {
-      backdrop.on("click", closePop);
-    }
-
-    // make content available
-    pop.content = popup;
-
-    // fade in backdrop and popup
-    backdrop.fadeIn(400);
-    popup.fadeIn(400);
-  })();
-}
+  window.Modal = Modal;
+})(jQuery, window);

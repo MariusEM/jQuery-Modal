@@ -1,0 +1,26 @@
+{
+  "name": "jquery-modal",
+  "version": "0.1.0",
+  "description": "lightweight Modal built in jQuery",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NehrDani/jQuery-Modal.git"
+  },
+  "keywords": [
+    "modal",
+    "jquery"
+  ],
+  "author": "Daniel Nehring",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NehrDani/jQuery-Modal/issues"
+  },
+  "homepage": "https://github.com/NehrDani/jQuery-Modal#readme"
+}

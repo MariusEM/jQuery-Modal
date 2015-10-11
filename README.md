@@ -1,2 +1,2 @@
 # jQuery-Modal
-jQuery Modal Plugin
+lightweight Modal Popup built in jQuery
