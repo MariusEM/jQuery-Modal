@@ -1,3 +1,21 @@
+// checking for "transitionend" event support
+(function (window) {
+  var transitions = {
+    'transition': 'transitionend',
+    'WebkitTransition': 'webkitTransitionEnd',
+    'MozTransition': 'transitionend',
+    'OTransition': 'otransitionend'
+  },
+  elem = document.createElement('div');
+
+  for(var t in transitions){
+    if(typeof elem.style[t] !== 'undefined'){
+      window.transitionEnd = transitions[t];
+      break;
+    }
+  }
+})(window);
+
 (function ($, window) {
   "use strict";
 
@@ -7,7 +25,10 @@
       position: "fixed",
       width: "50%",
       height: "50%",
-      animation: "fade"
+      animation: "fade",
+      modalClose: true,
+      closeOnKey: true,
+      onClose: function (){return true;}
     };
 
     // apply custom options
@@ -22,15 +43,9 @@
     .css({
       "position": options.position
     })
-    .appendTo("body")
-    // close only on click outside of modal
-    .on("click", function (event) {
-      if ($(this).has(event.target).length === 0) {
-        modalClose();
-      }
-    });
+    .appendTo("body");
 
-    // create Container Element
+    // create Modal Element
     var $modal = $('<div></div>').addClass("modal")
     .css({
       "width": options.width,
@@ -39,6 +54,7 @@
     .addClass("modal-" + options.animation)
     .appendTo($wrapper);
 
+    // set Modal Content
     var $content;
     // check if template is already an jQuery Object
     if (template instanceof $) {
@@ -50,22 +66,79 @@
 
     // Modal open Method
     function modalOpen() {
-      $modal.on("transitionend", function () {
+      var defer = $.Deferred();
+
+      // close on click modal overlay
+      if (options.modalClose) {
+        $wrapper.on("click.modal", function (event) {
+          if ($(this).has(event.target).length === 0) {
+            modalClose();
+          }
+        });
+      }
+
+      // close on click ESC
+      if (options.closeOnKey) {
+        $(window).on("keyup.modal", function (event) {
+          if (event.which === 27) {
+            modalClose();
+          }
+        });
+      }
+
+      // listen for transition end
+      $modal.one(window.transitionEnd, function () {
+        defer.resolve();
       });
 
+      // setting class to show, starting animations
       $backdrop.addClass("show");
       $wrapper.addClass("show");
       $modal.addClass("show");
+
+      // IE <= 9 fallback
+      if (! window.transitionEnd) {
+        $modal.trigger(window.transitionEnd);
+      }
+
+      // return promise
+      return defer;
     }
 
     // Modal close Method
     function modalClose() {
-      $modal.on("transitionend", function () {
+      var defer = $.Deferred();
+
+      // fire onClose callback
+      options.onClose();
+
+      // unbind close events
+      $wrapper.off();
+      $(window).off("keyup.modal");
+
+      // listen for transition end
+      $modal.one(window.transitionEnd, function () {
+        defer.resolve();
       });
 
+      // removing class show, starting animations
       $backdrop.removeClass("show");
       $wrapper.removeClass("show");
       $modal.removeClass("show");
+
+      // IE <= 9 fallback
+      if (! window.transitionEnd) {
+        $modal.trigger(window.transitionEnd);
+      }
+
+      // return promise
+      return defer;
+    }
+
+    // destroy modal
+    function _destroy() {
+      $backdrop.remove();
+      $wrapper.remove();
     }
 
     return {
