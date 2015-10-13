@@ -1,6 +1,6 @@
 .modal-backdrop {
-  position: fixed;
-  z-index: 1000;
+  position: absolute;
+  z-index: 1100;
   top: 0;
   left: 0;
   right: 0;
@@ -12,19 +12,19 @@
   transition: all 0.4s;
   transition-delay: 0.2s;
 }
-.modal-backdrop.show {
+.modal-backdrop.active {
   opacity: 0.6;
   visibility: visible;
   filter: alpha(opacity=60);
   transition-delay: 0s;
 }
 /*
- * ! MUST NOT MODIFIED !
+ * ! MUST NOT BE MODIFIED !
  * used for centering
  */
 .modal-wrapper {
-  position: relative;
-  z-index: 1100;
+  position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
   right: 0;
@@ -37,13 +37,14 @@
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  margin-right: -0.25em /* Adjusts for spacing */;
+  margin-right: -0.25em;
 }
-.modal-wrapper.show {
+.modal-wrapper.active {
   visibility: visible;
 }
 /*
  * MODAL STYLING
+ * can be customised
  */
 .modal {
   position: relative;
@@ -58,18 +59,20 @@
   transition: all 0.4s;
   transition-delay: 0s;
 }
-.modal.show {
+.modal.active {
   visibility: visible;
   transition-delay: 0.2s;
 }
 /*
  * MODAL ANIMATIONS
+ * available Modal animations
+ * feel free to append your own
  */
 /* fade */
 .modal-fade {
   opacity: 0;
 }
-.modal-fade.show {
+.modal-fade.active {
   opacity: 1;
 }
 /* slide */
@@ -77,7 +80,7 @@
   opacity: 0;
   transform: translateY(-1000px);
 }
-.modal-slide.show {
+.modal-slide.active {
   opacity: 1;
   transform: translateY(0);
 }
@@ -86,7 +89,11 @@
   opacity: 0;
   transform: scale(0);
 }
-.modal-zoom.show {
+.modal-zoom.active {
   opacity: 1;
   transform: scale(1);
+}
+/* instant */
+.modal-instant {
+  transition: none;
 }

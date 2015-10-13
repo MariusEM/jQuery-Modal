@@ -1,6 +1,6 @@
 .modal-backdrop
-  position fixed
-  z-index 1000
+  position absolute
+  z-index 1100
   top 0
   left 0
   right 0
@@ -11,19 +11,19 @@
   visibility hidden
   transition all .4s
   transition-delay .2s
-  &.show
+  &.active
     opacity .6
     visibility visible
     filter unquote("alpha(opacity=60)")
     transition-delay 0s
 
 /*
- * ! MUST NOT MODIFIED !
+ * ! MUST NOT BE MODIFIED !
  * used for centering
  */
 .modal-wrapper
-  position relative
-  z-index 1100
+  position fixed
+  z-index 1000
   top 0
   left 0
   right 0
@@ -35,12 +35,13 @@
     display inline-block
     height 100%
     vertical-align middle
-    margin-right -0.25em /* Adjusts for spacing */
-  &.show
+    margin-right -0.25em
+  &.active
     visibility visible
 
 /*
  * MODAL STYLING
+ * can be customised
  */
 .modal
   position relative
@@ -54,26 +55,27 @@
   visibility hidden
   transition all .4s
   transition-delay 0s
-  &.show
+  &.active
     visibility visible
     transition-delay .2s
 
 /*
  * MODAL ANIMATIONS
+ * available Modal animations
+ * feel free to append your own
  */
-
 
 /* fade */
 .modal-fade
   opacity 0
-  &.show
+  &.active
     opacity 1
 
 /* slide */
 .modal-slide
   opacity 0
   transform translateY(-1000px)
-  &.show
+  &.active
     opacity 1
     transform translateY(0)
 
@@ -81,7 +83,6 @@
 .modal-zoom
   opacity 0
   transform scale(0)
-  &.show
+  &.active
     opacity 1
     transform scale(1)
-

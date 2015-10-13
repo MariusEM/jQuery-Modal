@@ -1,79 +1,38 @@
-// checking for "transitionend" event support
-(function (window) {
-  var transitions = {
-    'transition': 'transitionend',
-    'WebkitTransition': 'webkitTransitionEnd',
-    'MozTransition': 'transitionend',
-    'OTransition': 'otransitionend'
-  },
-  elem = document.createElement('div');
-
-  for(var t in transitions){
-    if(typeof elem.style[t] !== 'undefined'){
-      window.transitionEnd = transitions[t];
-      break;
-    }
-  }
-})(window);
-
 (function ($, window) {
   "use strict";
 
-  var Modal = function (template, options) {
-    // predefine Modal defaults
-    var defaults = {
-      position: "fixed",
-      width: "50%",
-      height: "50%",
+  var Modal = function (options) {
+
+    var defer;
+
+    // set Modal options
+    options = $.extend({
       animation: "fade",
       modalClose: true,
-      closeOnKey: true,
-      onClose: function (){return true;}
-    };
-
-    // apply custom options
-    options = $.extend(defaults, options);
-
-    // create Backdrop Element
-    var $backdrop = $('<div></div>').addClass("modal-backdrop")
-    .appendTo("body");
+      closeOnKey: true
+    }, options);
 
     // create Wrapper Element
     var $wrapper = $('<div></div>').addClass("modal-wrapper")
-    .css({
-      "position": options.position
-    })
     .appendTo("body");
+
+    // create Backdrop Element
+    var $backdrop = $('<div></div>').addClass("modal-backdrop")
+    .appendTo($wrapper);
 
     // create Modal Element
     var $modal = $('<div></div>').addClass("modal")
-    .css({
-      "width": options.width,
-      "height": options.height
-    })
-    .addClass("modal-" + options.animation)
+    .addClass("modal-" + options.animation) // apply the animation type
     .appendTo($wrapper);
 
-    // set Modal Content
-    var $content;
-    // check if template is already an jQuery Object
-    if (template instanceof $) {
-      $content = template;
-    } else {
-      $content = $(template);
-    }
-    $content.appendTo($modal);
-
     // Modal open Method
-    function modalOpen() {
-      var defer = $.Deferred();
+    function modalOpen(template, opts) {
+      defer = $.Deferred(); // create Promise
 
       // close on click modal overlay
       if (options.modalClose) {
-        $wrapper.on("click.modal", function (event) {
-          if ($(this).has(event.target).length === 0) {
-            modalClose();
-          }
+        $backdrop.on("click.modal", function (event) {
+          modalClose(false);
         });
       }
 
@@ -81,68 +40,66 @@
       if (options.closeOnKey) {
         $(window).on("keyup.modal", function (event) {
           if (event.which === 27) {
-            modalClose();
+            modalClose(false);
           }
         });
       }
 
-      // listen for transition end
-      $modal.one(window.transitionEnd, function () {
-        defer.resolve();
-      });
+      // setting additional options
+      opts = $.extend({
+        // template: template || null,
+        async: false,
+        promise: null
+      }, opts);
 
-      // setting class to show, starting animations
-      $backdrop.addClass("show");
-      $wrapper.addClass("show");
-      $modal.addClass("show");
+      // append content to Modal
+      $modal.html(template || null);
 
-      // IE <= 9 fallback
-      if (! window.transitionEnd) {
-        $modal.trigger(window.transitionEnd);
+      if (opts.async) {
+        // append content to Modal after async is finished
+        opts.promise.then(function (tplt) {
+          $modal.html(tplt);
+        });
       }
+
+      // setting class to active, starting animations shows the Modal
+      $backdrop.addClass("active");
+      $wrapper.addClass("active");
+      $modal.addClass("active");
 
       // return promise
       return defer;
     }
 
     // Modal close Method
-    function modalClose() {
-      var defer = $.Deferred();
+    function modalClose(status, data) {
 
-      // fire onClose callback
-      options.onClose();
+      // resolve or reject promise
+      if (status) { // true
+        defer.resolve(data);
+      } else { // false
+        defer.reject(data);
+      }
 
       // unbind close events
       $wrapper.off();
       $(window).off("keyup.modal");
 
-      // listen for transition end
-      $modal.one(window.transitionEnd, function () {
-        defer.resolve();
-      });
-
-      // removing class show, starting animations
-      $backdrop.removeClass("show");
-      $wrapper.removeClass("show");
-      $modal.removeClass("show");
-
-      // IE <= 9 fallback
-      if (! window.transitionEnd) {
-        $modal.trigger(window.transitionEnd);
-      }
-
-      // return promise
-      return defer;
+      // removing class active, starting animations, hides the Modal
+      $backdrop.removeClass("active");
+      $wrapper.removeClass("active");
+      $modal.removeClass("active");
     }
 
-    // destroy modal
+    // destroys Modal if not used anymore
     function _destroy() {
       $backdrop.remove();
       $wrapper.remove();
     }
 
+    // returns the content and open/close Methods
     return {
-      $content: $content,
+      $modal: $modal,
       close: modalClose,
       open: modalOpen
     };

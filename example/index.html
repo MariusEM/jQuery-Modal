@@ -18,37 +18,53 @@
   <button class="fade">fade</button>
   <button class="slide">slide</button>
   <button class="zoom">zoom</button>
+  <button class="async">async</button>
 
   <script>
-  var fade = Modal('<div class="example">fade-in/out</div>', {
-      animation: "fade",
-      width: "auto",
-      height: "auto"
+    var fade = Modal({
+      animation: "fade"
     });
 
-    var slide = Modal('<div class="example">slide-down/up</div>', {
-      animation: "slide",
-      width: "auto",
-      height: "auto"
+    var slide = Modal({
+      animation: "slide"
     });
 
-    var zoom = Modal('<div class="example">zoom-in/out</div>', {
-      animation: "zoom",
-      width: "auto",
-      height: "auto"
+    var zoom = Modal({
+      animation: "zoom"
+    });
+
+    var async = Modal({
+      animation: "fade"
+    });
+
+    var instant = Modal({
+      animation: "instant"
     });
 
     $(function () {
       $(".fade").click(function () {
-        fade.open();
+        fade.open('<div class="example">fade-in/out</div>');
       });
 
       $(".slide").click(function () {
-        slide.open();
+        slide.open('<div class="example">slide-down/up as </div>');
       });
 
       $(".zoom").click(function () {
-        zoom.open();
+        zoom.open('<div class="example">zoom-in/out</div>');
+      });
+
+      $(".async").click(function () {
+        var promise = $.Deferred();
+
+        setTimeout(function() {
+          promise.resolve('<div class="example">loaded async</div>');
+        }, 2000);
+
+        async.open('<div class="example">after 2s...</div>', {
+          async: true,
+          promise: promise
+        });
       });
     });
   </script>
