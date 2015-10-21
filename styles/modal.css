@@ -12,7 +12,7 @@
   transition: all 0.4s;
   transition-delay: 0.2s;
 }
-.modal-backdrop.active {
+.modal-backdrop.modal-visible {
   opacity: 0.6;
   visibility: visible;
   filter: alpha(opacity=60);
@@ -39,14 +39,14 @@
   vertical-align: middle;
   margin-right: -0.25em;
 }
-.modal-wrapper.active {
+.modal-wrapper.modal-visible {
   visibility: visible;
 }
 /*
  * MODAL STYLING
  * can be customised
  */
-.modal {
+.modal-container {
   position: relative;
   z-index: 1110;
   display: inline-block;
@@ -59,7 +59,7 @@
   transition: all 0.4s;
   transition-delay: 0s;
 }
-.modal.active {
+.modal-container.modal-visible {
   visibility: visible;
   transition-delay: 0.2s;
 }
@@ -72,7 +72,7 @@
 .modal-fade {
   opacity: 0;
 }
-.modal-fade.active {
+.modal-fade.modal-visible {
   opacity: 1;
 }
 /* slide */
@@ -80,7 +80,7 @@
   opacity: 0;
   transform: translateY(-1000px);
 }
-.modal-slide.active {
+.modal-slide.modal-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -89,7 +89,7 @@
   opacity: 0;
   transform: scale(0);
 }
-.modal-zoom.active {
+.modal-zoom.modal-visible {
   opacity: 1;
   transform: scale(1);
 }

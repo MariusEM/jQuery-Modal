@@ -1,7 +1,7 @@
 {
   "name": "jquery-modal",
-  "version": "0.4.0",
-  "description": "lightweight Modal Popup",
+  "version": "0.5.2",
+  "description": "lightweight Modal Popup Plugin for Jquery",
   "main": "index.js",
   "directories": {
     "example": "example"
@@ -15,7 +15,8 @@
   },
   "keywords": [
     "modal",
-    "jquery"
+    "jquery",
+    "plugin"
   ],
   "author": "Daniel Nehring",
   "license": "MIT",

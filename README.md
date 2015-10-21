@@ -1,7 +1,7 @@
-# Modal-Lite
-* lightweight Modal Popup with Promise support.
-* rejects or resolves on closing, depending on calling .close().
-* load content async
+# jQuery-Modal
+* lightweight Modal Plugin for jQuery
+* easy to customise
+* different animation styles
 
 ## Dependencies
 * jQuery >= v1.9

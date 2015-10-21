@@ -20,12 +20,14 @@
     .appendTo($wrapper);
 
     // create Modal Element
-    var $modal = $('<div></div>').addClass("modal")
+    // var $modal = $('<div></div>').addClass("modal-container")
+    // .addClass("modal-" + options.animation) // apply the animation type
+    // .appendTo($wrapper);
+
+    // set to Modal Element
+    var $modal = $(element).addClass().addClass("modal-container")
     .addClass("modal-" + options.animation) // apply the animation type
     .appendTo($wrapper);
-
-    // append content to Modal
-    $modal.html($(element));
 
     // Modal open Method
     function modalOpen() {
@@ -47,10 +49,10 @@
         });
       }
 
-      // setting class to active, starting animations shows the Modal
-      $backdrop.addClass("active");
-      $wrapper.addClass("active");
-      $modal.addClass("active");
+      // setting class to modal-visible, starting animations shows the Modal
+      $backdrop.addClass("modal-visible");
+      $wrapper.addClass("modal-visible");
+      $modal.addClass("modal-visible");
 
       // return promise
       return defer;
@@ -70,10 +72,10 @@
       $wrapper.off();
       $(window).off("keyup.modal");
 
-      // removing class active, starting animations, hides the Modal
-      $backdrop.removeClass("active");
-      $wrapper.removeClass("active");
-      $modal.removeClass("active");
+      // removing class modal-visible, starting animations, hides the Modal
+      $backdrop.removeClass("modal-visible");
+      $wrapper.removeClass("modal-visible");
+      $modal.removeClass("modal-visible");
     }
 
     // destroys Modal if not used anymore
@@ -91,7 +93,6 @@
     return {
       close: modalClose,
       open: modalOpen,
-      content: content,
       destroy: _destroy
     };
   };

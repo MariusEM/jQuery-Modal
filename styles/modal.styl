@@ -11,7 +11,7 @@
   visibility hidden
   transition all .4s
   transition-delay .2s
-  &.active
+  &.modal-visible
     opacity .6
     visibility visible
     filter unquote("alpha(opacity=60)")
@@ -36,14 +36,14 @@
     height 100%
     vertical-align middle
     margin-right -0.25em
-  &.active
+  &.modal-visible
     visibility visible
 
 /*
  * MODAL STYLING
  * can be customised
  */
-.modal
+.modal-container
   position relative
   z-index 1110
   display inline-block
@@ -55,7 +55,7 @@
   visibility hidden
   transition all .4s
   transition-delay 0s
-  &.active
+  &.modal-visible
     visibility visible
     transition-delay .2s
 
@@ -68,14 +68,14 @@
 /* fade */
 .modal-fade
   opacity 0
-  &.active
+  &.modal-visible
     opacity 1
 
 /* slide */
 .modal-slide
   opacity 0
   transform translateY(-1000px)
-  &.active
+  &.modal-visible
     opacity 1
     transform translateY(0)
 
@@ -83,6 +83,6 @@
 .modal-zoom
   opacity 0
   transform scale(0)
-  &.active
+  &.modal-visible
     opacity 1
     transform scale(1)
