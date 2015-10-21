@@ -93,7 +93,3 @@
   opacity: 1;
   transform: scale(1);
 }
-/* instant */
-.modal-instant {
-  transition: none;
-}

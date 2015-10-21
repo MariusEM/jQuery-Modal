@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>jQuery Modal</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="../styles/modal.css">
-  <script src="../vendor/jquery-2.1.4.js"></script>
+  <script src="js/jquery-2.1.4.js"></script>
+   <script src="js/bootstrap.min.js"></script>
   <script src="../js/modal.js"></script>
   <style>
     .example {
@@ -15,58 +18,59 @@
   </style>
 </head>
 <body>
-  <button class="fade">fade</button>
+  <button class="fading">fade</button>
   <button class="slide">slide</button>
   <button class="zoom">zoom</button>
   <button class="async">async</button>
 
+  <div class="test-async example">
+    Hello World1
+  </div>
+
   <script>
-    var fade = Modal({
-      animation: "fade"
-    });
+    // var fade = Modal({
+    //   animation: "fade"
+    // });
 
-    var slide = Modal({
-      animation: "slide"
-    });
+    // var slide = Modal({
+    //   animation: "slide"
+    // });
 
-    var zoom = Modal({
-      animation: "zoom"
-    });
+    // var zoom = Modal({
+    //   animation: "zoom"
+    // });
 
-    var async = Modal({
-      animation: "fade"
-    });
-
-    var instant = Modal({
-      animation: "instant"
-    });
+    // var async = Modal({
+    //   animation: "fade"
+    // });
 
     $(function () {
-      $(".fade").click(function () {
-        fade.open('<div class="example">fade-in/out</div>');
-      });
+    //   $(".fade").click(function () {
+    //     fade.open('<div class="example">fade-in/out</div>');
+    //   });
 
-      $(".slide").click(function () {
-        slide.open('<div class="example">slide-down/up as </div>');
-      });
+    //   $(".slide").click(function () {
+    //     slide.open('<div class="example">slide-down/up as </div>');
+    //   });
 
-      $(".zoom").click(function () {
-        zoom.open('<div class="example">zoom-in/out</div>');
+    //   $(".zoom").click(function () {
+    //     zoom.open('<div class="example">zoom-in/out</div>');
+    //   });
+    //
+      var async = $(".test-async").modal({
+        animation: "fade"
       });
 
       $(".async").click(function () {
-        var promise = $.Deferred();
+        async.modal("open");
 
         setTimeout(function() {
-          promise.resolve('<div class="example">loaded async</div>');
+          async.modal("content", '<div class="example">loaded async</div>');
         }, 2000);
-
-        async.open('<div class="example">after 2s...</div>', {
-          async: true,
-          promise: promise
-        });
       });
     });
+
+
   </script>
 </body>
 </html>

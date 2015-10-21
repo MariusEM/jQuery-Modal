@@ -1,8 +1,7 @@
-(function ($, window) {
+(function ($) {
   "use strict";
 
-  var Modal = function (options) {
-
+  var Modal = function (element, options) {
     var defer;
 
     // set Modal options
@@ -25,8 +24,11 @@
     .addClass("modal-" + options.animation) // apply the animation type
     .appendTo($wrapper);
 
+    // append content to Modal
+    $modal.html($(element));
+
     // Modal open Method
-    function modalOpen(template, opts) {
+    function modalOpen() {
       defer = $.Deferred(); // create Promise
 
       // close on click modal overlay
@@ -42,23 +44,6 @@
           if (event.which === 27) {
             modalClose(false);
           }
-        });
-      }
-
-      // setting additional options
-      opts = $.extend({
-        // template: template || null,
-        async: false,
-        promise: null
-      }, opts);
-
-      // append content to Modal
-      $modal.html(template || null);
-
-      if (opts.async) {
-        // append content to Modal after async is finished
-        opts.promise.then(function (tplt) {
-          $modal.html(tplt);
         });
       }
 
@@ -95,15 +80,43 @@
     function _destroy() {
       $backdrop.remove();
       $wrapper.remove();
+      $.removeData(element, "modal");
+    }
+
+    function content(html) {
+      $modal.html($(html));
     }
 
     // returns the content and open/close Methods
     return {
-      $modal: $modal,
       close: modalClose,
-      open: modalOpen
+      open: modalOpen,
+      content: content,
+      destroy: _destroy
     };
   };
 
-  window.Modal = Modal;
-})(jQuery, window);
+  $.fn.modal = function () {
+    var args = arguments;
+    return this.each(function () {
+      if ($(this).data("modal")) {
+        if (typeof args[0] === "string") {
+          try  {
+            $(this).data("modal")[args[0]](args[1]);
+          }
+          catch(err) {
+            console.error("modal has no method " + args[0]);
+          }
+        } else {
+          console.error("modal plugin already initialized");
+        }
+      } else {
+        if (typeof args[0] === "object") {
+          $(this).data("modal", new Modal(this, args[0]));
+        } else {
+          console.error(args[0] + " is not a function");
+        }
+      }
+    });
+  };
+})(jQuery);
