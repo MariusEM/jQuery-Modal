@@ -19,11 +19,6 @@
     var $backdrop = $('<div></div>').addClass("modal-backdrop")
     .appendTo($wrapper);
 
-    // create Modal Element
-    // var $modal = $('<div></div>').addClass("modal-container")
-    // .addClass("modal-" + options.animation) // apply the animation type
-    // .appendTo($wrapper);
-
     // set to Modal Element
     var $modal = $(element).addClass().addClass("modal-container")
     .addClass("modal-" + options.animation) // apply the animation type
@@ -112,7 +107,7 @@
           console.error("modal plugin already initialized");
         }
       } else {
-        if (typeof args[0] === "object") {
+        if (typeof args[0] === "object" || typeof args[0] === undefined) {
           $(this).data("modal", new Modal(this, args[0]));
         } else {
           console.error(args[0] + " is not a function");
@@ -120,4 +115,4 @@
       }
     });
   };
-})(jQuery);
+})(jQuery || window.jQuery);

@@ -23,8 +23,5 @@
   "bugs": {
     "url": "https://github.com/NehrDani/jQuery-Modal/issues"
   },
-  "homepage": "https://github.com/NehrDani/jQuery-Modal#readme",
-  "devDependencies": {
-    "jshint": "latest"
-  }
+  "homepage": "https://github.com/NehrDani/jQuery-Modal#readme"
 }
