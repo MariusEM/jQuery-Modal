@@ -107,7 +107,7 @@
           console.error("modal plugin already initialized");
         }
       } else {
-        if (typeof args[0] === "object" || typeof args[0] === undefined) {
+        if (typeof args[0] === "object" || typeof args[0] === "undefined") {
           $(this).data("modal", new Modal(this, args[0]));
         } else {
           console.error(args[0] + " is not a function");
