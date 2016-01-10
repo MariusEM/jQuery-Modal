@@ -22,6 +22,7 @@
   <button class="slide">slide</button>
   <button class="zoom">zoom</button>
   <button class="async">async</button>
+  <button class="promise">promise</button>
 
   <div class="test-fade example">
     I'm fading in and out!
@@ -39,43 +40,57 @@
     please wait...
   </div>
 
+  <div class="test-promise example">
+    No animation, but deferring a promise on open!
+  </div>
+
 
   <script>
     $(function () {
-      var fade = $(".test-fade").modal({
+      var promise = $.Modal(".test-promise", {
+        animation: false
+      });
+
+      $(".promise").click(function () {
+        promise.open().always(function (response) {
+          alert("modal was closed");
+        });
+      });
+
+      var fade = $.Modal(".test-fade", {
         animation: "fade"
       });
 
       $(".fading").click(function () {
-        fade.modal("open");
+        fade.open();
       });
 
-      var slide = $(".test-slide").modal({
+      var slide = $.Modal(".test-slide", {
         animation: "slide"
       });
 
       $(".slide").click(function () {
-        slide.modal("open");
+        slide.open();
       });
 
-      var zoom = $(".test-zoom").modal({
+      var zoom = $.Modal(".test-zoom", {
         animation: "zoom"
       });
 
       $(".zoom").click(function () {
-        zoom.modal("open");
+        zoom.open();
       });
 
-      var async = $(".test-async").modal({
+      var async = $.Modal(".test-async", {
         animation: "fade"
       });
 
       $(".async").click(function () {
-        async.html("please wait...");
-        async.modal("open");
+        async.$content.html("please wait...");
+        async.open();
 
         setTimeout(function() {
-          async.html("My content was loaded async!");
+          async.$content.html("My content was loaded async!");
         }, 2000);
       });
     });

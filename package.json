@@ -1,13 +1,14 @@
 {
   "name": "jquery-modal",
-  "version": "0.5.2",
-  "description": "lightweight Modal Popup Plugin for Jquery",
+  "version": "0.6.0",
+  "description": "lightweight Modal Popup for jQuery",
   "main": "index.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "lint": "jshint js/*"
+    "lint": "jshint js/*",
+    "css": "rm -f styles/modal.css && node-sass styles/modal.scss -o styles"
   },
   "repository": {
     "type": "git",
@@ -15,8 +16,7 @@
   },
   "keywords": [
     "modal",
-    "jquery",
-    "plugin"
+    "jquery"
   ],
   "author": "Daniel Nehring",
   "license": "MIT",

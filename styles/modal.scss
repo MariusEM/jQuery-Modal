@@ -8,16 +8,20 @@
   background: #000;
   opacity: 0;
   filter: alpha(opacity=0);
-  visibility: hidden; }
-  .jq-modal-backdrop.on {
+  visibility: hidden;
+  &.on {
     opacity: 0.6;
     visibility: visible;
-    filter: alpha(opacity=60); }
-  .jq-modal-backdrop.jq-modal-animate {
+    filter: alpha(opacity=60);
+  }
+  &.jq-modal-animate {
     transition: all 0.4s;
-    transition-delay: 0.2s; }
-    .jq-modal-backdrop.jq-modal-animate.on {
-      transition-delay: 0s; }
+    transition-delay: 0.2s;
+    &.on {
+      transition-delay: 0s;
+    }
+  }
+}
 
 /*
  * ! MUST NOT BE MODIFIED !
@@ -31,15 +35,18 @@
   right: 0;
   bottom: 0;
   text-align: center;
-  visibility: hidden; }
-  .jq-modal-wrapper:before {
+  visibility: hidden;
+  &:before {
     content: '';
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-right: -0.25em; }
-  .jq-modal-wrapper.on {
-    visibility: visible; }
+    margin-right: -0.25em;
+  }
+  &.on {
+    visibility: visible;
+  }
+}
 
 /*
  * MODAL STYLING
@@ -54,38 +61,48 @@
   text-align: left;
   border-radius: 4px;
   background-color: #fff;
-  visibility: hidden; }
-  .jq-modal-container.on {
-    visibility: visible; }
-  .jq-modal-container.jq-modal-animate {
+  visibility: hidden;
+  &.on {
+    visibility: visible;
+  }
+  &.jq-modal-animate {
     transition: all 0.4s;
-    transition-delay: 0s; }
-    .jq-modal-container.jq-modal-animate.on {
-      transition-delay: 0.2s; }
+    transition-delay: 0s;
+    &.on {
+      transition-delay: 0.2s;
+    }
+  }
+}
 
 /*
  * MODAL ANIMATIONS
  * available Modal animations
  * feel free to append your own
  */
+
 /* fade */
 .jq-modal-animate-fade {
-  opacity: 0; }
-  .jq-modal-animate-fade.on {
-    opacity: 1; }
+  opacity: 0;
+  &.on {
+    opacity: 1;
+  }
+}
 
 /* slide */
 .jq-modal-animate-slide {
   opacity: 0;
-  transform: translateY(-1000px); }
-  .jq-modal-animate-slide.on {
+  transform: translateY(-1000px);
+  &.on {
     opacity: 1;
-    transform: translateY(0); }
-
+    transform: translateY(0);
+  }
+}
 /* zoom */
 .jq-modal-animate-zoom {
   opacity: 0;
-  transform: scale(0); }
-  .jq-modal-animate-zoom.on {
+  transform: scale(0);
+  &.on {
     opacity: 1;
-    transform: scale(1); }
+    transform: scale(1);
+  }
+}
