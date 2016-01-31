@@ -24,7 +24,7 @@
     .appendTo($wrapper);
 
     // set to Modal Element
-    var $modal = $element.addClass().addClass("jq-modal-container")
+    var $modal = $element.addClass("jq-modal-container")
     .appendTo($wrapper);
 
     // if animation is set
